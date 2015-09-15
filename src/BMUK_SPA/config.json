@@ -1,0 +1,7 @@
+﻿{
+	"Data": {
+		"DefaultConnection": {
+			"ConnectionString": "Data Source=HITESHKHATRFDFC\\SQLEXPRESS;Initial Catalog=BMUK;Integrated Security=True"
+		}
+	}
+}
