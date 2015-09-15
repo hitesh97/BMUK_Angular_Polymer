@@ -26,14 +26,14 @@ namespace BMUK_SPA.Controllers.API
             _context = context;
         }
 
-        [Route("BMUK/API/GetMembers")]
-        [HttpGet]
-        public ActionResult GetMembers()
-        {
-            var membersList = _context.Members.ToList();
-            var response = new MembersListResponse() {data = membersList, count = membersList.Count};
-            return Json(response);
-        }
+        //[Route("BMUK/API/GetMembers")]
+        //[HttpGet]
+        //public ActionResult GetMembers()
+        //{
+        //    var membersList = _context.Members.ToList();
+        //    var response = new MembersListResponse() {data = membersList, count = membersList.Count};
+        //    return Json(response);
+        //}
 
         [Route("BMUK/API/GetHeadMembers")]
         [HttpGet]

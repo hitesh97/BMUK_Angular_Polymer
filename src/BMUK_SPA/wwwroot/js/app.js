@@ -1,6 +1,7 @@
 ﻿var app = angular.module('StarterApp', ['ngMaterial', 'ngMdIcons', 'md.data.table']);
 
-app.controller('AppCtrl', ['$q', '$timeout', '$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog', 'BMUKService', function ($q, $timeout, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $BMUKService) {
+app.controller('AppCtrl', ['$q', '$timeout', '$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog', 'BMUKService',
+    function ($q, $timeout, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $BMUKService) {
     $scope.toggleSidenav = function (menuId) {
         $mdSidenav(menuId).toggle();
     };
@@ -24,52 +25,6 @@ app.controller('AppCtrl', ['$q', '$timeout', '$scope', '$mdBottomSheet', '$mdSid
             icon: 'dashboard'
         }
     ];
-    //$scope.admin = [{
-    //    link: '',
-    //    title: 'Trash',
-    //    icon: 'delete'
-    //}, {
-    //    link: 'showListBottomSheet($event)',
-    //    title: 'Settings',
-    //    icon: 'settings'
-    //}];
-    $scope.activity = [{
-        what: 'Brunch this weekend?',
-        who: 'Ali Conners',
-        when: '3:08PM',
-        notes: " I'll be in your neighborhood doing errands"
-    }, {
-        what: 'Summer BBQ',
-        who: 'to Alex, Scott, Jennifer',
-        when: '3:08PM',
-        notes: "Wish I could come out but I'm out of town this weekend"
-    }, {
-        what: 'Oui Oui',
-        who: 'Sandra Adams',
-        when: '3:08PM',
-        notes: "Do you have Paris recommendations? Have you ever been?"
-    }, {
-        what: 'Birthday Gift',
-        who: 'Trevor Hansen',
-        when: '3:08PM',
-        notes: "Have any ideas of what we should get Heidi for her birthday?"
-    }, {
-        what: 'Recipe to try',
-        who: 'Brian Holt',
-        when: '3:08PM',
-        notes: "We should eat this: Grapefruit, Squash, Corn, and Tomatillo tacos"
-    } ];
-    $scope.alert = '';
-    $scope.showListBottomSheet = function ($event) {
-        //$scope.alert = '';
-        //$mdBottomSheet.show({
-        //    template: '<md-bottom-sheet class="md-list md-has-header"> <md-subheader>Settings</md-subheader> <md-list> <md-item ng-repeat="item in items"><md-item-content md-ink-ripple flex class="inset"> <a flex aria-label="{{item.name}}" ng-click="listItemClick($index)"> <span class="md-inline-list-icon-label">{{ item.name }}</span> </a></md-item-content> </md-item> </md-list></md-bottom-sheet>',
-        //    controller: 'ListBottomSheetCtrl',
-        //    targetEvent: $event
-        //}).then(function (clickedItem) {
-        //    $scope.alert = clickedItem.name + ' clicked!';
-        //});
-    };
 
     $scope.showAdd = function (ev) {
         $mdDialog.show({
@@ -107,8 +62,6 @@ app.controller('AppCtrl', ['$q', '$timeout', '$scope', '$mdBottomSheet', '$mdSid
         page: 1
     };
 
-    loadRemoteData();
-
     function loadRemoteData() {
         $BMUKService.getMembers().then(
             function(friends) {
@@ -140,28 +93,9 @@ app.controller('AppCtrl', ['$q', '$timeout', '$scope', '$mdBottomSheet', '$mdSid
         return deferred.promise;
     };
 
+    loadRemoteData();
+
 }]);
-
-app.controller('ListBottomSheetCtrl', function ($scope, $mdBottomSheet) {
-    $scope.items = [{
-        name: 'Share',
-        icon: 'share'
-    }, {
-        name: 'Upload',
-        icon: 'upload'
-    }, {
-        name: 'Copy',
-        icon: 'copy'
-    }, {
-        name: 'Print this page',
-        icon: 'print'
-    }, ];
-
-    $scope.listItemClick = function ($index) {
-        var clickedItem = $scope.items[$index];
-        $mdBottomSheet.hide(clickedItem);
-    };
-});
 
 function DialogController($scope, $mdDialog) {
     $scope.hide = function () {
