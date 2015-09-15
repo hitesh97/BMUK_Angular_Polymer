@@ -1,20 +1,24 @@
 ﻿using BMUK_SPA.Model.Mapping;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
 
 namespace BMUK_SPA
 {
-    public static class AppSettings
-    {
-        public static string ConnectionString => @"Data Source=HITESHKHATRFDFC\SQLEXPRESS;Initial Catalog=BMUK;Integrated Security=True";
-    }
-
     public class Startup
     {
+        public static IConfiguration Configuration { get; private set; }
+
         public Startup(IHostingEnvironment env)
         {
 
+            var configBuilder = new ConfigurationBuilder(env.WebRootPath);
+
+            configBuilder.AddJsonFile("config.json");
+            configBuilder.AddEnvironmentVariables();
+
+            Configuration = configBuilder.Build();
         }
 
         // This method gets called by a runtime.

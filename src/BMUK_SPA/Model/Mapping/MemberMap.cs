@@ -10,7 +10,7 @@ namespace BMUK_SPA.Model.Mapping
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(AppSettings.ConnectionString);
+            optionsBuilder.UseSqlServer(Startup.Configuration.Get("Data:DefaultConnection:ConnectionString"));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
