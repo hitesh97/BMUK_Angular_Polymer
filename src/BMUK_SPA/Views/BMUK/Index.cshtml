@@ -73,7 +73,7 @@
                     <tbody>
                     <tr ng-repeat="member in membersList.data | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
                         <td>
-                            <md-button class="md-icon-button md-mini md-primary" aria-label="Show Member Details">
+                            <md-button class="md-icon-button md-mini md-primary" aria-label="Show Member Details" ng-click="editMember(member, true)">
                                 <ng-md-icon icon="subject"></ng-md-icon>
                             </md-button>
                             <md-button class="md-icon-button md-mini md-primary" aria-label="Show Relatives">
@@ -89,7 +89,7 @@
                         <td>{{member.SecondndName}}</td>
                         <td>{{member.RelationToHead}}</td>
                         <td>
-                            <md-button class="md-fab md-mini md-primary" aria-label="Edit Member Details" ng-click="editMember(member)">
+                            <md-button class="md-fab md-mini md-primary" aria-label="Edit Member Details" ng-click="editMember(member, false)">
                                 <ng-md-icon icon="mode_edit"></ng-md-icon>
                             </md-button>
                             <md-button class="md-fab md-mini md-primary" aria-label="Delete Member">
