@@ -19,19 +19,21 @@
     </md-toolbar>
     <md-list>
         <md-item ng-repeat="item in menu">
-            <a>
-                <md-item-content md-ink-ripple layout="row" layout-align="start center">
+
+            <md-item-content layout="row" layout-align="center center">
+                <md-button ng-click="navigate(item.link)">
                     <div class="inset">
-                        <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                        <ng-md-icon size="36" icon="{{item.icon}}"></ng-md-icon>
                     </div>
                     <div class="inset">
                         {{item.title}}
                     </div>
-                </md-item-content>
-            </a>
+                </md-button>
+            </md-item-content>
         </md-item>
     </md-list>
 </md-sidenav>
+
 <div layout="column" class="relative" layout-fill role="main">
     <md-toolbar ng-show="!showSearch">
         <div class="md-toolbar-tools">
@@ -47,68 +49,17 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-content flex md-scroll-y>
-        <md-card>
-            <md-data-table-toolbar ng-show="!selected.length">
-                <h2 class="md-title">Head Members List.</h2>
-            </md-data-table-toolbar>
 
-            <md-data-table-toolbar class="alternate" ng-show="selected.length">
-                <div>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</div>
-            </md-data-table-toolbar>
-
-            <md-data-table-container>
-                <table md-data-table class="md-primary" md-progress="deferred">
-                    <thead md-order="query.order" md-trigger="onorderchange">
-                    <tr>
-                        <th name="Info"></th>
-                        <th order-by="Title" name="Title"></th>
-                        <th order-by="Surname" name="Surname"></th>
-                        <th order-by="FirstName" name="First Name"></th>
-                        <th order-by="SecondndName" name="Secondnd Name"></th>
-                        <th order-by="RelationToHead" name="Relation To Head"></th>
-                        <th name="Actions"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="member in membersList.data | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
-                        <td>
-                            <md-button class="md-icon-button md-mini md-primary" aria-label="Show Member Details" ng-click="editMember(member, true)">
-                                <ng-md-icon icon="subject"></ng-md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button md-mini md-primary" aria-label="Show Relatives">
-                                <ng-md-icon icon="group"></ng-md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button md-mini md-primary" aria-label="Show Subscription Details">
-                                <ng-md-icon icon="attach_money"></ng-md-icon>
-                            </md-button>
-                        </td>
-                        <td>{{member.Title}}</td>
-                        <td>{{member.Surname}}</td>
-                        <td>{{member.FirstName}}</td>
-                        <td>{{member.SecondndName}}</td>
-                        <td>{{member.RelationToHead}}</td>
-                        <td>
-                            <md-button class="md-fab md-mini md-primary" aria-label="Edit Member Details" ng-click="editMember(member, false)">
-                                <ng-md-icon icon="mode_edit"></ng-md-icon>
-                            </md-button>
-                            <md-button class="md-fab md-mini md-primary" aria-label="Delete Member">
-                                <ng-md-icon icon="delete"></ng-md-icon>
-                            </md-button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </md-data-table-container>
-
-            <md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{membersList.count}}" md-trigger="onpagechange"></md-data-table-pagination>
-        </md-card>
+    <!-- Inject Views with ng-routing here!! -->
+    <md-content ng-view flex md-scroll-y>
 
     </md-content>
+
 </div>
 
 <!-- Angular Material Dependencies -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
 
@@ -117,13 +68,212 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.5.0/angular-material-icons.min.js"></script>
 
 <!-- BMUK APP js Files -->
+<script type="text/ng-template" id="dialog1.tmpl.html">
+        <md-dialog flex>
+            <md-content class="md-padding">
+                <form name="userForm">
+                    <div layout layout-sm="column">
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Personal Info </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Title</label> <input ng-model="memberInfo.Title" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Additional Info </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Birth Year</label> <input ng-model="memberInfo.BirthYear" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Relation to Head</label> <input ng-model="memberInfo.RelationToHead" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Mosal</label> <input ng-model="memberInfo.Mosal" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Profession</label> <input ng-model="memberInfo.Profession" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+
+                    <div layout layout-sm="column">
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Address </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Address Line 1</label> <input ng-model="memberInfo.AddressLine1" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Address Line 2</label> <input ng-model="memberInfo.AddressLine2" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Town</label> <input ng-model="memberInfo.Town" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>County</label> <input ng-model="memberInfo.County" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Post Code</label> <input ng-model="memberInfo.Postcode" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Contact Details </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Tel. No.</label> <input ng-model="memberInfo.TelephoneNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Mobile No.</label> <input ng-model="memberInfo.MobileNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </form>
+            </md-content>
+            <div class="md-actions" layout="row">
+                <span flex></span>
+                <md-button ng-click="cancel()"> Cancel </md-button>
+                <md-button ng-click="answer()" class="md-primary"> Save </md-button>
+            </div>
+        </md-dialog>
+    </script>
+
+<script type="text/ng-template" id="partials/view1.html">
+        View #1
+    </script>
+
+<script type="text/ng-template" id="partials/CreateHead.html">
+    <md-card flex layout="column">
+            <md-content class="md-padding">
+                <form name="userForm">
+                    <div layout layout-sm="column">
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Personal Info </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Title</label> <input ng-model="memberInfo.Title" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Additional Info </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Birth Year</label> <input ng-model="memberInfo.BirthYear" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Relation to Head</label> <input ng-model="memberInfo.RelationToHead" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Mosal</label> <input ng-model="memberInfo.Mosal" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Profession</label> <input ng-model="memberInfo.Profession" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+
+                    <div layout layout-sm="column">
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Address </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Address Line 1</label> <input ng-model="memberInfo.AddressLine1" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Address Line 2</label> <input ng-model="memberInfo.AddressLine2" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Town</label> <input ng-model="memberInfo.Town" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>County</label> <input ng-model="memberInfo.County" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Post Code</label> <input ng-model="memberInfo.Postcode" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+
+                        <md-card flex>
+                            <md-card-content>
+                                <md-toolbar>
+                                    <h2 class="md-toolbar-tools">Contact Details </h2>
+                                </md-toolbar>
+                                <md-input-container flex> <label>Tel. No.</label> <input ng-model="memberInfo.TelephoneNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Mobile No.</label> <input ng-model="memberInfo.MobileNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </form>
+            </md-content>
+            <div class="md-actions" layout="row">
+                <span flex></span>
+                <md-button ng-click="cancel()"> Cancel </md-button>
+                <md-button ng-click="answer()" class="md-primary"> Save </md-button>
+            </div>
+</md-card>
+</script>
+
+    <script type="text/ng-template" id="partials/view3.html">
+        View #3
+    </script>
+
+    <script type="text/ng-template" id="partials/ListMembers.html">
+        <md-content flex md-scroll-y>
+            <md-card>
+                <md-data-table-toolbar ng-show="!selected.length">
+                    <h2 class="md-title">Head Members List.</h2>
+                </md-data-table-toolbar>
+
+                <md-data-table-toolbar class="alternate" ng-show="selected.length">
+                    <div>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</div>
+                </md-data-table-toolbar>
+
+                <md-data-table-container>
+                    <table md-data-table class="md-primary" md-progress="deferred">
+                        <thead md-order="query.order" md-trigger="onorderchange">
+                            <tr>
+                                <th name="Info"></th>
+                                <th order-by="Title" name="Title"></th>
+                                <th order-by="Surname" name="Surname"></th>
+                                <th order-by="FirstName" name="First Name"></th>
+                                <th order-by="SecondndName" name="Secondnd Name"></th>
+                                <th order-by="RelationToHead" name="Relation To Head"></th>
+                                <th name="Actions"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="member in membersList.data | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+                                <td>
+                                    <md-button class="md-icon-button md-mini md-primary" aria-label="Show Member Details" ng-click="editMember(member, true)">
+                                        <ng-md-icon icon="subject"></ng-md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button md-mini md-primary" aria-label="Show Relatives">
+                                        <ng-md-icon icon="group"></ng-md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button md-mini md-primary" aria-label="Show Subscription Details">
+                                        <ng-md-icon icon="attach_money"></ng-md-icon>
+                                    </md-button>
+                                </td>
+                                <td>{{member.Title}}</td>
+                                <td>{{member.Surname}}</td>
+                                <td>{{member.FirstName}}</td>
+                                <td>{{member.SecondndName}}</td>
+                                <td>{{member.RelationToHead}}</td>
+                                <td>
+                                    <md-button class="md-fab md-mini md-primary" aria-label="Edit Member Details" ng-click="editMember(member, false)">
+                                        <ng-md-icon icon="mode_edit"></ng-md-icon>
+                                    </md-button>
+                                    <md-button class="md-fab md-mini md-primary" aria-label="Delete Member">
+                                        <ng-md-icon icon="delete"></ng-md-icon>
+                                    </md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-data-table-container>
+
+                <md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{membersList.count}}" md-trigger="onpagechange"></md-data-table-pagination>
+            </md-card>
+
+        </md-content>
+    </script>
+
 <script src="~/js/app.js"></script>
     <script src="~/js/controllers/appController.js"></script>
-<script src="~/js/services/bmukService.js"></script>
-<script src="~/js/directives/userAvatar.js"></script>
-<script src="~/js/controllers/dialogController.js"></script>
-<script src="~/js/md-data-table.js"></script>
-
+    <script src="~/js/services/bmukService.js"></script>
+    <script src="~/js/directives/userAvatar.js"></script>
+    <script src="~/js/controllers/dialogController.js"></script>
+    <script src="~/js/md-data-table.js"></script>
 </body>
-
 </html>
