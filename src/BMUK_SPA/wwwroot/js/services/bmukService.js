@@ -4,7 +4,7 @@ app.service(
     function ($http, $q) {
         // Return public API.
         return ({
-            addMember: addMember,
+            addHeadMember: addHeadMember,
             getMembers: getMembers,
             removeMember: removeMember,
             getTitles: getTitles
@@ -15,15 +15,15 @@ app.service(
         // PUBLIC METHODS.
         // ---
         // I add a friend with the given name to the remote collection.
-        function addMember(name) {
+        function addHeadMember(memberInfo) {
             var request = $http({
                 method: "post",
-                url: "api/index.cfm",
+                url: "bmuk/api/CreateHeadMember",
                 params: {
                     action: "add"
                 },
                 data: {
-                    name: name
+                    memberInfo: memberInfo
                 }
             });
             return (request.then(handleSuccess, handleError));

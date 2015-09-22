@@ -113,13 +113,17 @@
                 $scope.memberInfo.ParentId = -1;
 
                 //post data to BMUK controller
+                $BMUKService.addHeadMember($scope.memberInfo).then(function (response) {
+                    console.log(response);
+                    if (response.StatusCode === 200) {
+                        //navigate to list page!
+                        $scope.navigate('/ListMembers');
+                    } else {
+                        //show error message to the user!!
+                        console.log('Error Occured!!')
+                    }
+                });
             }
-
-            //Show success or failure notification!
-
-            //navigate to list page!
-            $scope.navigate('/ListMembers');
-
             console.log('save member!');
         }
 
