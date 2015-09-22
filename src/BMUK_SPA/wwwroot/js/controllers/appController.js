@@ -104,14 +104,29 @@
             $location.url(navigationLink);
         };
 
-        $scope.announceClick = function (index) {
-            $mdDialog.show(
-              $mdDialog.alert()
-                .title('You clicked!')
-                .content('You clicked the menu item at index ' + index)
-                .ok('Nice')
-            );
-        };
+        $scope.saveNewHead = function() {
+            
+            if ($scope.memberInfo.Id) {
+                //update member
+            } else {
+                //Add new Head member
+                $scope.memberInfo.ParentId = -1;
+
+                //post data to BMUK controller
+            }
+
+            //Show success or failure notification!
+
+            //navigate to list page!
+            $scope.navigate('/ListMembers');
+
+            console.log('save member!');
+        }
+
+        $scope.cancelSaveNewHead = function () {
+            console.log('save cancelled');
+        }
+
 
         loadRemoteData();
     }]);
