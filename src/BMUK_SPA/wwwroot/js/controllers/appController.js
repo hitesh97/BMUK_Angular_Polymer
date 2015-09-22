@@ -7,6 +7,8 @@
 
         $scope.selected = [];
 
+        $scope.Titles = ['Mr', 'Mrs' , 'Ms', 'Dr', 'Master' ];
+
         $scope.menu = [
             {
                 link: '/ListMembers',
@@ -35,9 +37,18 @@
 
         function loadRemoteData() {
             $BMUKService.getMembers().then(
-                function (friends) {
-                    applyRemoteData(friends);
+                function (members) {
+                    applyRemoteData(members);
                 });
+
+            $BMUKService.getTitles().then(
+                function(titles) {
+                    applyTitleData(titles);
+                });
+        }
+
+        function applyTitleData(titles) {
+            $scope.titlesList = titles;
         }
 
         function applyRemoteData(newMembers) {
@@ -91,6 +102,15 @@
         $scope.navigate = function (navigationLink) {
             //alert(navigationLink);
             $location.url(navigationLink);
+        };
+
+        $scope.announceClick = function (index) {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .title('You clicked!')
+                .content('You clicked the menu item at index ' + index)
+                .ok('Nice')
+            );
         };
 
         loadRemoteData();

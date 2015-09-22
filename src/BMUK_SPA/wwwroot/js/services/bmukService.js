@@ -6,7 +6,8 @@ app.service(
         return ({
             addMember: addMember,
             getMembers: getMembers,
-            removeMember: removeMember
+            removeMember: removeMember,
+            getTitles: getTitles
         });
 
 
@@ -38,6 +39,18 @@ app.service(
             });
             return (request.then(handleSuccess, handleError));
         }
+        function getTitles() {
+            var request = $http({
+                method: "get",
+                url: "bmuk/api/GetTitles",  //"bmuk/api/GetTitles",
+                params: {
+                    action: "get"
+                }
+            });
+            return (request.then(handleSuccess, handleError));
+        }
+        
+
         // I remove the friend with the given ID from the remote collection.
         function removeMember(id) {
             var request = $http({

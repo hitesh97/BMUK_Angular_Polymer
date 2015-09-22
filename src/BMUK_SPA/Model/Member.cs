@@ -5,6 +5,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BMUK_SPA.Model
 {
+    [Table("Title")]
+    public class Title
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("Id", TypeName = "int")]
+        public int Id { get; set; }
+
+        [DefaultValue("")]
+        [Required]
+        [Column("Code", TypeName = "string")]
+        public string Code { get; set; }
+
+        [DefaultValue("")]
+        [Required]
+        [Column("Description", TypeName = "string")]
+        public string Description { get; set; }
+    }
+
+
     [Table("NaatDirectory")]
     public class Member
     {

@@ -78,12 +78,19 @@
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Personal Info </h2>
                                 </md-toolbar>
-                                <md-input-container flex> <label>Title</label> <input ng-model="memberInfo.Title" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                            </md-card-content>
+                                <div layout="row">
+                                    <!-- Need to add TitleList to the scope of the dialog box.. and then the dropdown list will work! -->
+@*
+    <md-select ng-model="memberInfo.Title" placeholder="Select a Title">
+        <md-option ng-repeat="title in titlesList.Data" value="{{title.Code}}">{{title.Code}}</md-option>
+    </md-select>*@
+    <md-input-container flex> <label>Title</label> <input ng-model="memberInfo.Title" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                </div>
+                                    <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+</md-card-content>
                         </md-card>
 
                         <md-card flex>
@@ -108,9 +115,11 @@
                                 <md-input-container flex> <label>Address Line 1</label> <input ng-model="memberInfo.AddressLine1" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 <md-input-container flex> <label>Address Line 2</label> <input ng-model="memberInfo.AddressLine2" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 <md-input-container flex> <label>Town</label> <input ng-model="memberInfo.Town" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>County</label> <input ng-model="memberInfo.County" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Post Code</label> <input ng-model="memberInfo.Postcode" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                            </md-card-content>
+                                <div layout="row">
+                                    <md-input-container flex> <label>County</label> <input ng-model="memberInfo.County" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Post Code</label> <input ng-model="memberInfo.Postcode" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                </div>
+</md-card-content>
                         </md-card>
 
                         <md-card flex>
@@ -118,10 +127,12 @@
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Contact Details </h2>
                                 </md-toolbar>
-                                <md-input-container flex> <label>Tel. No.</label> <input ng-model="memberInfo.TelephoneNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Mobile No.</label> <input ng-model="memberInfo.MobileNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                            </md-card-content>
+                                <div layout="row">
+                                    <md-input-container flex> <label>Tel. No.</label> <input ng-model="memberInfo.TelephoneNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Mobile No.</label> <input ng-model="memberInfo.MobileNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                </div>
+                                    <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+</md-card-content>
                         </md-card>
                     </div>
                 </form>
@@ -148,12 +159,17 @@
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Personal Info </h2>
                                 </md-toolbar>
-                                <md-input-container flex> <label>Title</label> <input ng-model="memberInfo.Title" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                            </md-card-content>
+                                <div layout="row">
+                                        <md-select ng-model="memberInfo.Title" placeholder="Select a Title">
+                                            <md-option ng-repeat="title in titlesList.Data" value="{{title.Code}}">{{title.Code}}</md-option>
+                                        </md-select>
+                                    @*                                    <md-input-container flex> <label>Title</label> <input ng-model="memberInfo.Title" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>*@
+                                    <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                </div>
+                                    <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+</md-card-content>
                         </md-card>
 
                         <md-card flex>
@@ -178,8 +194,10 @@
                                 <md-input-container flex> <label>Address Line 1</label> <input ng-model="memberInfo.AddressLine1" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 <md-input-container flex> <label>Address Line 2</label> <input ng-model="memberInfo.AddressLine2" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 <md-input-container flex> <label>Town</label> <input ng-model="memberInfo.Town" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>County</label> <input ng-model="memberInfo.County" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Post Code</label> <input ng-model="memberInfo.Postcode" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <div layout="row">
+                                    <md-input-container flex> <label>County</label> <input ng-model="memberInfo.County" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Post Code</label> <input ng-model="memberInfo.Postcode" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                </div>
                             </md-card-content>
                         </md-card>
 
@@ -188,10 +206,12 @@
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Contact Details </h2>
                                 </md-toolbar>
-                                <md-input-container flex> <label>Tel. No.</label> <input ng-model="memberInfo.TelephoneNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Mobile No.</label> <input ng-model="memberInfo.MobileNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                            </md-card-content>
+                                <div layout="row">
+                                    <md-input-container flex> <label>Tel. No.</label> <input ng-model="memberInfo.TelephoneNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Mobile No.</label> <input ng-model="memberInfo.MobileNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                </div>
+                                    <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                </md-card-content>
                         </md-card>
                     </div>
                 </form>
@@ -233,7 +253,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="member in membersList.data | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
+                            <tr ng-repeat="member in membersList.Data | orderBy: query.order | limitTo: query.limit: (query.page - 1) * query.limit">
                                 <td>
                                     <md-button class="md-icon-button md-mini md-primary" aria-label="Show Member Details" ng-click="editMember(member, true)">
                                         <ng-md-icon icon="subject"></ng-md-icon>
@@ -263,7 +283,7 @@
                     </table>
                 </md-data-table-container>
 
-                <md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{membersList.count}}" md-trigger="onpagechange"></md-data-table-pagination>
+                <md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{membersList.Count}}" md-trigger="onpagechange"></md-data-table-pagination>
             </md-card>
 
         </md-content>

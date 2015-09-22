@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BMUK_SPA.Model;
 using BMUK_SPA.Model.Mapping;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
@@ -11,12 +9,6 @@ using Microsoft.Data.Entity;
 
 namespace BMUK_SPA.Controllers.API
 {
-    public class MembersListResponse
-    {
-        public int count { get; set; }
-        public List<Member> data { get; set; }
-    }
-
     public class BMUKController : Controller
     {
         private readonly BMUKContext _context;
@@ -25,22 +17,22 @@ namespace BMUK_SPA.Controllers.API
         {
             _context = context;
         }
-
-        //[Route("BMUK/API/GetMembers")]
-        //[HttpGet]
-        //public ActionResult GetMembers()
-        //{
-        //    var membersList = _context.Members.ToList();
-        //    var response = new MembersListResponse() {data = membersList, count = membersList.Count};
-        //    return Json(response);
-        //}
-
+        
         [Route("BMUK/API/GetHeadMembers")]
         [HttpGet]
         public ActionResult GetHeadMembers()
         {
             var membersList = _context.Members.Where(x=>x.ParentId == -1).ToList();
-            var response = new MembersListResponse() { data = membersList, count = membersList.Count };
+            var response = new MembersListResponse { Data = membersList, Count = membersList.Count };
+            return Json(response);
+        }
+
+        [Route("BMUK/API/GetTitles")]
+        [HttpGet]
+        public ActionResult GetTitles()
+        {
+            var titlesList = _context.Titles.ToList();
+            var response = new TitlesListResponse { Data = titlesList, Count = titlesList.Count };
             return Json(response);
         }
     }
