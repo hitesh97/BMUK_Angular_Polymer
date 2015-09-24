@@ -105,7 +105,7 @@
         };
 
         $scope.saveNewHead = function() {
-            
+            alert('in saveNewHead')
             if ($scope.memberInfo.Id) {
                 //update member
             } else {
@@ -156,16 +156,8 @@
         }
 
         $scope.cancelSaveNewHead = function () {
-            console.log('save cancelled');
+            alert('save cancelled');
         }
-
-        $scope.statuses = ['Planned', 'Confirmed', 'Cancelled'];
-        $scope.options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', '...'];
-
-        $scope.submit = function () {
-            // submit code goes here
-            alert('test');
-        };
 
         loadRemoteData();
     }]);
