@@ -45,6 +45,8 @@ namespace BMUK_SPA.Controllers.API
         [HttpPost]
         public IActionResult CreateHeadMember([FromBody]Member memberInfo)
         {
+            //TODO: save data to DB
+
            return Json(new HttpStatusCodeResult((int)HttpStatusCode.OK));
         }
     }
