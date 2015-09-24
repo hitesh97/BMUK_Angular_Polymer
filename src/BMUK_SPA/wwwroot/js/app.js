@@ -1,4 +1,4 @@
-﻿var app = angular.module('StarterApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'md.data.table']);
+﻿var app = angular.module('StarterApp', ['ngRoute', 'ngMaterial', 'ngMdIcons', 'md.data.table', 'ngMessages']);
 
 app.config(function ($mdThemingProvider) {
     var customBlueMap = $mdThemingProvider.extendPalette('light-blue', {

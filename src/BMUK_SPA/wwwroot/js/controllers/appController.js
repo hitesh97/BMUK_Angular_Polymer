@@ -1,4 +1,4 @@
-﻿app.controller('appController', ['$location','$q', '$timeout', '$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog', 'BMUKService',
+﻿app.controller('appController', ['$location', '$q', '$timeout', '$scope', '$mdBottomSheet', '$mdSidenav', '$mdDialog', 'BMUKService',
     function ($location, $q, $timeout, $scope, $mdBottomSheet, $mdSidenav, $mdDialog, $BMUKService) {
         $scope.toggleSidenav = function (menuId) {
             $mdSidenav(menuId).toggle();
@@ -109,11 +109,15 @@
             if ($scope.memberInfo.Id) {
                 //update member
             } else {
+
                 //Add new Head member
                 $scope.memberInfo.ParentId = -1;
+                $scope.memberInfo.RelationToHead = "Head";
 
                 //post data to BMUK controller
-                $BMUKService.addHeadMember($scope.memberInfo).then(function (response) {
+                var memberObj = $scope.toMemberObject();
+                $BMUKService.addHeadMember(memberObj)
+                    .then(function (response) {
                     console.log(response);
                     if (response.StatusCode === 200) {
                         //navigate to list page!
@@ -127,10 +131,41 @@
             console.log('save member!');
         }
 
+        $scope.toMemberObject = function() {
+            return {
+                Id: $scope.memberInfo.Id,
+                ParentId: $scope.memberInfo.ParentId,
+                Title: $scope.memberInfo.Title,
+                Surname: $scope.memberInfo.Surname,
+                FirstName: $scope.memberInfo.FirstName,
+                BirthYear: $scope.memberInfo.BirthYear,
+                RelationToHead: $scope.memberInfo.RelationToHead, 
+                SecondndName: $scope.memberInfo.SecondndName, 
+                FathersName: $scope.memberInfo.FathersName,
+                Mosal: $scope.memberInfo.Mosal,
+                Profession: $scope.memberInfo.Profession,
+                AddressLine1: $scope.memberInfo.AddressLine1,
+                AddressLine2: $scope.memberInfo.AddressLine2,
+                Town: $scope.memberInfo.Town,
+                County: $scope.memberInfo.County,
+                Postcode: $scope.memberInfo.Postcode,
+                TelephoneNo: $scope.memberInfo.TelephoneNo,
+                MobileNo: $scope.memberInfo.MobileNo,
+                EmailAddress: $scope.memberInfo.EmailAddress
+            }
+        }
+
         $scope.cancelSaveNewHead = function () {
             console.log('save cancelled');
         }
 
+        $scope.statuses = ['Planned', 'Confirmed', 'Cancelled'];
+        $scope.options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', '...'];
+
+        $scope.submit = function () {
+            // submit code goes here
+            alert('test');
+        };
 
         loadRemoteData();
     }]);

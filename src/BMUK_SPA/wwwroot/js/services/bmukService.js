@@ -19,12 +19,8 @@ app.service(
             var request = $http({
                 method: "post",
                 url: "bmuk/api/CreateHeadMember",
-                params: {
-                    action: "add"
-                },
-                data: {
-                    memberInfo: memberInfo
-                }
+                data: JSON.stringify(memberInfo),
+                headers: { 'Content-Type': 'application/json' }
             });
             return (request.then(handleSuccess, handleError));
         }

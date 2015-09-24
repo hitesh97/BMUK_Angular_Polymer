@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using BMUK_SPA.Model;
 using BMUK_SPA.Model.Mapping;
+using Microsoft.AspNet.Http.Internal;
 using Microsoft.AspNet.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.Data.Entity;
@@ -42,7 +43,7 @@ namespace BMUK_SPA.Controllers.API
 
         [Route("BMUK/API/CreateHeadMember")]
         [HttpPost]
-        public IActionResult CreateHeadMember(Member memberInfo)
+        public IActionResult CreateHeadMember([FromBody]Member memberInfo)
         {
            return Json(new HttpStatusCodeResult((int)HttpStatusCode.OK));
         }

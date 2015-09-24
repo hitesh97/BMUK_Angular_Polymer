@@ -62,6 +62,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-messages.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.1/angular-material.min.js"></script>
 
@@ -88,7 +89,7 @@
                                     <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 </div>
                                     <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                    <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container flex> <label>Second Name</label> <input ng-model="memberInfo.SecondName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                     <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
 </md-card-content>
                         </md-card>
@@ -150,44 +151,70 @@
     </script>
 
 <script type="text/ng-template" id="partials/CreateHead.html">
-    <md-card flex layout="column">
-            <md-content class="md-padding">
-                <form name="userForm">
+    
+    
+    <form name="myForm" class="container-fluid" ng-submit="myForm.$valid && submit()" novalidate>
+        <md-card flex layout="column">
+                <div layout layout-sm="column">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <md-input-container md-is-error="myForm.name.$invalid && (myForm.$submitted || myForm.name.$dirty)">
+                                <label>Name</label>
+                                <input name="name" id="name" ng-model="obj.name" ng-required="true">
+                                <div ng-messages="myForm.name.$error" ng-if="myForm.$submitted || myForm.name.$touched">
+                                    <div ng-message="required">Campaign Name is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-8">
+                            <md-input-container md-is-error="myForm.myselect.$invalid && (myForm.$submitted || myForm.myselect.$dirty)">
+                                <md-select name="myselect" id="myselect" placeholder="myselect" ng-model="obj.myselect" ng-required="true">
+                                    <md-option ng-repeat="o in options" ng-value="o">{{o}}</md-option>
+                                </md-select>
+                                <div ng-messages="myForm.myselect.$error" ng-if="myForm.$submitted || myForm.myselect.$touched">
+                                    <div ng-message="required">myselect is required.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            <div class="md-actions" layout="row">
+                <span flex></span>
+
+                <md-button type="button" ng-click="reset()">RESET</md-button>
+                <md-button class="md-primary">SUBMIT</md-button>
+            </div>
+        </md-card>
+</form>
+
+    @*<form name="myForm2" class="container-fluid" submit="myForm.$valid && submit()" novalidate>
+            <md-card flex layout="column">
                     <div layout layout-sm="column">
-                        <md-card flex>
-                            <md-card-content>
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Personal Info </h2>
                                 </md-toolbar>
                                 <div layout="row">
-                                        <md-select ng-model="memberInfo.Title" placeholder="Select a Title">
-                                            <md-option ng-repeat="title in titlesList.Data" value="{{title.Code}}">{{title.Code}}</md-option>
-                                        </md-select>
-                                    @*                                    <md-input-container flex> <label>Title</label> <input ng-model="memberInfo.Title" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>*@
-                                    <md-input-container flex> <label>Surname</label> <input ng-model="memberInfo.Surname" placeholder="Title" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                    <md-input-container md-is-error="myForm.name.$invalid && (myForm.$submitted || myForm.name.$dirty)">
+                                        <label>Name</label>
+                                        <input name="name" id="name" ng-model="obj.name" ng-required="true">
+                                        <div ng-messages="myForm.name.$error" ng-if="myForm.$submitted || myForm.name.$touched">
+                                            <div ng-message="required">Campaign Name is required.</div>
+                                        </div>
+                                    </md-input-container>
                                 </div>
-                                    <md-input-container flex> <label>First Name</label> <input ng-model="memberInfo.FirstName" placeholder="First Name" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                    <md-input-container flex> <label>Secondnd Name</label> <input ng-model="memberInfo.SecondndName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                    <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-</md-card-content>
-                        </md-card>
+                                <md-input-container flex> <label>Second Name</label> <input ng-model="memberInfo.SecondName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Fathers Name</label> <input ng-model="memberInfo.FathersName" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
 
-                        <md-card flex>
-                            <md-card-content>
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Additional Info </h2>
                                 </md-toolbar>
-                                <md-input-container flex> <label>Birth Year</label> <input ng-model="memberInfo.BirthYear" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                <md-input-container flex> <label>Relation to Head</label> <input ng-model="memberInfo.RelationToHead" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Birth Year</label> <input ng-model="memberInfo.BirthYear" required ng-disabled="memberInfo.isReadOnly"> </md-input-container>
+                                <md-input-container flex> <label>Relation to Head</label> <input ng-model="memberInfo.RelationToHead" required ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 <md-input-container flex> <label>Mosal</label> <input ng-model="memberInfo.Mosal" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 <md-input-container flex> <label>Profession</label> <input ng-model="memberInfo.Profession" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                            </md-card-content>
-                        </md-card>
                     </div>
 
                     <div layout layout-sm="column">
-                        <md-card flex>
-                            <md-card-content>
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Address </h2>
                                 </md-toolbar>
@@ -198,11 +225,6 @@
                                     <md-input-container flex> <label>County</label> <input ng-model="memberInfo.County" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                     <md-input-container flex> <label>Post Code</label> <input ng-model="memberInfo.Postcode" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 </div>
-                            </md-card-content>
-                        </md-card>
-
-                        <md-card flex>
-                            <md-card-content>
                                 <md-toolbar>
                                     <h2 class="md-toolbar-tools">Contact Details </h2>
                                 </md-toolbar>
@@ -210,18 +232,17 @@
                                     <md-input-container flex> <label>Tel. No.</label> <input ng-model="memberInfo.TelephoneNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                     <md-input-container flex> <label>Mobile No.</label> <input ng-model="memberInfo.MobileNo" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                                 </div>
-                                    <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
-                                </md-card-content>
-                        </md-card>
+                                <md-input-container flex> <label>Email Address</label> <input ng-model="memberInfo.EmailAddress" ng-disabled="memberInfo.isReadOnly"> </md-input-container>
                     </div>
-                </form>
-            </md-content>
-            <div class="md-actions" layout="row">
-                <span flex></span>
-                <md-button ng-click="cancelSaveNewHead()"> Cancel </md-button>
-                <md-button ng-click="saveNewHead()" class="md-primary"> Save </md-button>
-            </div>
-</md-card>
+
+                <div class="md-actions" layout="row">
+                    <span flex></span>
+                    <md-button ng-click="cancelSaveNewHead()"> Cancel </md-button>
+                    <md-button class="md-primary">Save</md-button>
+                </div>
+            </md-card>
+        </form>*@
+
 </script>
 
     <script type="text/ng-template" id="partials/view3.html">
