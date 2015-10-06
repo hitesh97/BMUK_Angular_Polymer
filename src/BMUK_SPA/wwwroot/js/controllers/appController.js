@@ -9,6 +9,8 @@
 
         $scope.Titles = ['Mr', 'Mrs' , 'Ms', 'Dr', 'Master' ];
 
+        $scope.currentYear = new Date().getFullYear();
+
         $scope.menu = [
             {
                 link: '/ListMembers',
@@ -75,8 +77,9 @@
             return deferred.promise;
         };
 
-        $scope.editMember = function($model, isReadOnly) {
+        $scope.editMember = function ($model, isReadOnly) {
             $model.isReadOnly = isReadOnly;
+            $model.Titles = $scope.Titles;
             var parentEl = angular.element(document.body);
             $mdDialog.show({
                 controller: DialogController,
@@ -86,12 +89,19 @@
                 locals: {
                     memberInfo: $model
                 }
-            }).then(function(answer) {
+            }).then(function(editedMember) {
                 //Changed model is received in $model
                 //use the model and service to post changed data to save it in DB ( if its not read only!)
-
-                if (!readOnly) {
+                if (!editedMember.isReadOnly) {
                     //get BMUK Update endpoint and post data!!
+                    if (editedMember.ParentId == -1) {
+                        //Save HEAD MEMBER
+                        $scope.saveNewHead(editedMember);
+                    }
+                    else {
+                        //SAVE NON HEAD MEMBER
+                        
+                    }
                 }
             }, function() {
 
@@ -104,19 +114,19 @@
             $location.url(navigationLink);
         };
 
-        $scope.saveNewHead = function() {
+        $scope.saveNewHead = function(addedMember) {
             alert('in saveNewHead')
-            if ($scope.memberInfo.Id) {
+            if (addedMember.Id) {
                 //update member
             } else {
 
                 //Add new Head member
-                $scope.memberInfo.ParentId = -1;
-                $scope.memberInfo.RelationToHead = "Head";
+                addedMember.ParentId = -1;
+                addedMember.RelationToHead = "Head";
 
                 //post data to BMUK controller
-                var memberObj = $scope.toMemberObject();
-                $BMUKService.addHeadMember(memberObj)
+                //var memberObj = $scope.toMemberObject();
+                $BMUKService.addHeadMember(addedMember)
                     .then(function (response) {
                     console.log(response);
                     if (response.StatusCode === 200) {
